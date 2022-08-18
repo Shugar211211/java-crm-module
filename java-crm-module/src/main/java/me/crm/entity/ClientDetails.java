@@ -3,6 +3,7 @@ package me.crm.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,9 @@ public class ClientDetails {
 	private String notes;
 
 	
-	@OneToOne(mappedBy="clientDetails", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="clientDetails",
+			fetch=FetchType.EAGER,
+			cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Client client;
 	

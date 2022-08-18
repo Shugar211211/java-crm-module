@@ -3,6 +3,7 @@ package me.crm.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -41,8 +43,10 @@ public class Client {
 	
 	// https://www.appsdeveloperblog.com/infinite-recursion-in-objects-with-bidirectional-relationships/
 	@JsonManagedReference
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL,
+				fetch=FetchType.EAGER)
 	@JoinColumn(name="client_details_id")
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 	private ClientDetails clientDetails;
 	
 	// no-args constructor required by Hibernate
