@@ -1,48 +1,44 @@
 package me.crm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import me.crm.dao.ClientDAO;
 import me.crm.entity.Client;
+import me.crm.repo.ClientRepo;
 
 @Service
 public class ClientServiceImpl implements ClientService {
 
-	private ClientDAO clientDAO;
+	private ClientRepo clientRepo;
 	
 	@Autowired
-	public ClientServiceImpl(@Qualifier("clientDAO_Standard_JPA_API_Impl") ClientDAO clientDAO) {
-		this.clientDAO = clientDAO;
+	public ClientServiceImpl(ClientRepo clientRepo) {
+		this.clientRepo = clientRepo;
 	}
 
 	@Override
-	@Transactional
 	public List<Client> findAll() {
-		return clientDAO.findAll();
+		return clientRepo.findAll();
 	}
 
 	@Override
-	@Transactional
 	public Client findById(int id) {
-		return clientDAO.findById(id);
+		Optional<Client> result = clientRepo.findById(id);
+		return result.get();
 	}
 
 	@Override
-	@Transactional
 	public void save(Client client) {
-		clientDAO.save(client);
+		clientRepo.save(client);
 		
 	}
 
 	@Override
-	@Transactional
 	public void deleteById(int id) {
-		clientDAO.deleteById(id);
+		clientRepo.deleteById(id);
 	}
 
 }
