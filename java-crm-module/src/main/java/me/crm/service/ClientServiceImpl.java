@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.crm.entity.Client;
+import me.crm.error_response.ClientNotFoundException;
 import me.crm.repo.ClientRepo;
 
 @Service
@@ -27,7 +28,10 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public Client findById(int id) {
 		Optional<Client> result = clientRepo.findById(id);
-		return result.get();
+		if(result.isPresent()) {
+			return result.get();
+		}
+		else throw new ClientNotFoundException("Client id not found: " + id);
 	}
 
 	@Override
